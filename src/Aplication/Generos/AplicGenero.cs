@@ -1,0 +1,108 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Transactions;
+using Aplication.Generos.DTOs;
+using Domain.Base;
+using Domain.Generos;
+
+namespace Aplication.Generos
+{
+    public class AplicGenero: IAplicGenero
+    {
+        private readonly IRepGenero _repGenero;
+        private readonly IUnitOfWork _unitOfWork;
+        
+        public AplicGenero(IRepGenero repGenero, 
+                            IUnitOfWork unitOfWork)
+        {
+            _repGenero = repGenero;
+            _unitOfWork = unitOfWork;
+        }
+
+        public int Inserir(InserirGeneroDTO dto)
+        {     
+            using(var scope = new TransactionScope())
+            {
+                var novo = new Genero()
+                {
+                    Nome = dto.Nome,
+                    DataCriacao = DateTime.Now,
+                    Ativo = dto.Ativo
+                };
+
+                Validar(novo);
+                
+                _repGenero.Inserir(novo);
+
+                _unitOfWork.Commit();
+
+                scope.Complete();
+
+                return novo.CodigoGenero;
+            }                   
+        }        
+
+        public void Editar(EditarGeneroDTO dto)
+        {                        
+            var genero = _repGenero.RecuperarPorId(dto.CodigoGenero);
+            
+            if (genero == null)
+                throw new ArgumentNullException(string.Format("Gênero de código {0} não foi localizado!", dto.CodigoGenero));
+            
+            using(var scope = new TransactionScope())
+            {
+                genero.Nome = dto.Nome;
+                genero.Ativo = dto.Ativo;
+
+                Validar(genero);    
+
+                _unitOfWork.Commit(); 
+
+                scope.Complete();       
+            }
+        }
+
+        private void Validar(Genero dto)
+        {
+            if(String.IsNullOrEmpty(dto.Nome))
+                throw new ArgumentException("Nome não foi informado.");
+        }
+
+        public List<GeneroView> Listar()
+        {
+            var query = _repGenero.Listar();
+            var generos = query.Select(p => new GeneroView()
+            {
+                CodigoGenero = p.CodigoGenero,
+                Nome = p.Nome,                
+                Ativo = p.Ativo,
+                DataCriacao = p.DataCriacao
+            }).ToList();;
+
+            return generos;
+        }
+
+        public void Remover(int codigoGenero)
+        {
+            var genero = _repGenero.RecuperarPorId(codigoGenero);
+            
+            if (genero == null)
+                throw new ArgumentNullException(string.Format("Gênero de código {0} não foi localizado!", codigoGenero));
+                        
+            _repGenero.Remover(genero);
+            _unitOfWork.Commit();
+        }
+
+        public void RemoverGeneros(List<int> IdsGeneros)
+        {
+            using(var scope = new TransactionScope())
+            {
+                _repGenero.Remover(IdsGeneros);
+                _unitOfWork.Commit();
+
+                scope.Complete();
+            }            
+        }
+    }
+}
