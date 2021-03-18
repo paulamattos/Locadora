@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Repository.Locacoes
 {
-    public class LocacaoFilmeConfig
+    public class LocacaoFilmeConfig : IEntityTypeConfiguration<LocacaoFilme>
     {
         public void Configure(EntityTypeBuilder<LocacaoFilme> builder)
         {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Domain.Locacoes;
 
@@ -19,10 +20,25 @@ namespace Repository.Locacaos
             return Locacao.CodigoLocacao;
         }        
 
+        public void InserirFilme(LocacaoFilme LocacaoFilme)
+        {
+            _contexto.Add(LocacaoFilme);                        
+        } 
+
         public void Remover(Locacao Locacao)
         {
             _contexto.Remove(Locacao);
         }
+
+        public void RemoverFilmes(List<LocacaoFilme> locacaoFilmes)
+        {
+            _contexto.RemoveRange(locacaoFilmes);
+        }
+
+        public List<LocacaoFilme> RecuperarFilmesLocacao(int codigoLocacao)
+        {
+            return _contexto.Set<LocacaoFilme>().Where(p => p.CodigoLocacao == codigoLocacao).ToList();
+        }       
 
         public IQueryable<Locacao> Listar()
         {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using Aplication.Locacoes.DTOs;
 using Domain.Base;
 using Domain.Locacoes;
@@ -23,40 +24,63 @@ namespace Aplication.Locacoes
         public int Inserir(InserirLocacaoDTO dto)
         {
             var novo = new Locacao();
-            novo.CPF = dto.CPF;
-            novo.DataLocacao = DateTime.Now;            
+            
+            using(var scope = new TransactionScope())
+            {                
+                novo.CPF = dto.CPF;
+                novo.DataLocacao = DateTime.Now;            
 
-            foreach (var filme in dto.Filmes)
-            {
-                var locacaoFilme = new LocacaoFilme()
-                {
-                    CodigoLocacao = filme.CodigoLocacao,
-                    CodigoFilme = filme.CodigoFilme
-                }; 
+                Validar(novo);
 
-                novo.Filmes.Add(locacaoFilme);                        
+                _repLocacao.Inserir(novo);   
+                _unitOfWork.Commit();  
+
+                InserirFilmes(novo.CodigoLocacao, dto.Filmes);                                     
+
+                scope.Complete();
             }
-
-            Validar(novo);
-
-            _repLocacao.Inserir(novo);   
-
-            _unitOfWork.Commit();         
             
             return novo.CodigoLocacao;
         }
         
         public void Editar(EditarLocacaoDTO dto)
         {
-            var locacao = _repLocacao.RecuperarPorId(dto.CodigoLocacao);
+            using(var scope = new TransactionScope())
+            {  
+                var locacao = _repLocacao.RecuperarPorId(dto.CodigoLocacao);
 
-            if(locacao == null)
-                throw new ArgumentNullException(string.Format("Locação de código {0} não foi localizada!", dto.CodigoLocacao));
+                if(locacao == null)
+                    throw new ArgumentNullException(string.Format("Locação de código {0} não foi localizada!", dto.CodigoLocacao));
 
-            locacao.CPF = dto.CPF;
+                locacao.CPF = dto.CPF;
 
-            Validar(locacao);
+                Validar(locacao);
 
+                _unitOfWork.Commit();
+
+                if(dto.Filmes != null && dto.Filmes.Any())
+                {
+                    _repLocacao.RemoverFilmes(_repLocacao.RecuperarFilmesLocacao(locacao.CodigoLocacao));
+                    _unitOfWork.Commit();
+
+                    InserirFilmes(locacao.CodigoLocacao, dto.Filmes);
+                }                                
+
+                scope.Complete();
+            }
+        }
+
+        private void InserirFilmes(int codigoLocacao, List<LocacaoFilmesDTO> dto)
+        {
+            foreach (var filme in dto)
+            {
+                var locacaoFilme = new LocacaoFilme()
+                {
+                    CodigoLocacao = codigoLocacao,
+                    CodigoFilme = filme.CodigoFilme
+                };                     
+                _repLocacao.InserirFilme(locacaoFilme);   
+            }
             _unitOfWork.Commit();
         }
 
@@ -72,7 +96,12 @@ namespace Aplication.Locacoes
             {
                 CodigoLocacao = p.CodigoLocacao,
                 CPF = p.CPF, 
-                DataLocacao = p.DataLocacao
+                DataLocacao = p.DataLocacao,
+                Filmes = p.Filmes.Select(x => new LocacaoFilmesDTO()
+                            {
+                             CodigoFilme = x.CodigoFilme,
+                             CodigoLocacao = x.CodigoLocacao
+                            }).ToList()               
             }).ToList();
 
             return locacoes;

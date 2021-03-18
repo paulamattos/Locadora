@@ -1,0 +1,11 @@
+version: '3'
+services: 
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server
+    container_name: sqlserver
+    environment: 
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'DesafioTecnico@17032021!!!'
+      MSSQL_PID: 'Express'
+    ports: 
+      - 1433:1433

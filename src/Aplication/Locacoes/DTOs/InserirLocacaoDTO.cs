@@ -5,8 +5,7 @@ namespace Aplication.Locacoes.DTOs
 {
     public class InserirLocacaoDTO
     {
-        public string CPF { get; set; }
-        public DateTime DataLocacao { get; set; }
+        public string CPF { get; set; }        
 
         public List<LocacaoFilmesDTO> Filmes { get; set; }
     }

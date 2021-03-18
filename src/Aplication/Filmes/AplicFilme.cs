@@ -7,7 +7,7 @@ using Domain.Filmes;
 
 namespace Aplication.Filmes
 {
-    public class AplicFilme
+    public class AplicFilme: IAplicFilme
     {
         private readonly IRepFilme _repFilme;
         private readonly IUnitOfWork _unitOfWork;
@@ -23,7 +23,7 @@ namespace Aplication.Filmes
         {                        
             var novo = new Filme();
             novo.Nome = dto.Nome;
-            novo.DataCriacao = DateTime.Now;
+            novo.DataCriacao = DateTime.Today; //a data de criação 
             novo.Ativo = dto.Ativo;
             novo.CodigoGenero = dto.CodigoGenero;
             
@@ -61,7 +61,7 @@ namespace Aplication.Filmes
                 throw new ArgumentException("Gênero não foi informado.");
         }
 
-        public List<FilmeView> ListarFilmes()
+        public List<FilmeView> Listar()
         {
             var query = _repFilme.Listar();
             var filmes = query.Select(p => new FilmeView()

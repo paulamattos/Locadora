@@ -30,9 +30,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public List<FilmeView> ListarFilmes()
+        public List<FilmeView> Listar()
         {
-            return _aplicFilme.ListarFilmes();
+            return _aplicFilme.Listar();
         }
 
         [HttpDelete("Remover/{id}")]        

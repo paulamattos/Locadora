@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Repository.Locacoes
 {
-    public class LocacaoConfig
+    public class LocacaoConfig : IEntityTypeConfiguration<Locacao>
     {
         public void Configure(EntityTypeBuilder<Locacao> builder)
         {         

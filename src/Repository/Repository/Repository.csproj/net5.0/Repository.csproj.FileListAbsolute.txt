@@ -1,0 +1,12 @@
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Repository.csprojAssemblyReference.cache
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Repository.AssemblyInfoInputs.cache
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Repository.AssemblyInfo.cs
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Repository.csproj.CoreCompileInputs.cache
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Repository.csproj.CopyComplete
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Repository.dll
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\ref\Repository.dll
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Repository.pdb
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Repository.deps.json
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Domain.dll
+C:\Desenvolvimento\Paula\Locadora\src\Repository\Repository\Repository.csproj\net5.0\Domain.pdb

@@ -7,7 +7,7 @@ namespace Aplication.Filmes
     {
         int Inserir(InserirFilmeDTO dto);
         void Editar(EditarFilmeDTO dto);
-        List<FilmeView> ListarFilmes();
+        List<FilmeView> Listar();
         void Remover(int codigoFilme);
         void RemoverFilmes(List<int> ids);
     }

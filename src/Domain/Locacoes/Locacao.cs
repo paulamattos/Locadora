@@ -9,6 +9,6 @@ namespace Domain.Locacoes
         public string CPF { get; set; }
         public DateTime DataLocacao { get; set; }
         
-        public List<LocacaoFilme> Filmes { get; set; }
+        public virtual List<LocacaoFilme> Filmes { get; set; }
     }
 }

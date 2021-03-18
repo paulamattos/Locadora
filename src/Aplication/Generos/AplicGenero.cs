@@ -21,26 +21,20 @@ namespace Aplication.Generos
         }
 
         public int Inserir(InserirGeneroDTO dto)
-        {     
-            using(var scope = new TransactionScope())
+        {                 
+            var novo = new Genero()
             {
-                var novo = new Genero()
-                {
-                    Nome = dto.Nome,
-                    DataCriacao = DateTime.Now,
-                    Ativo = dto.Ativo
-                };
+                Nome = dto.Nome,
+                DataCriacao = DateTime.Now,
+                Ativo = dto.Ativo
+            };
 
-                Validar(novo);
-                
-                _repGenero.Inserir(novo);
+            Validar(novo);
+            
+            _repGenero.Inserir(novo);
+            _unitOfWork.Commit();                
 
-                _unitOfWork.Commit();
-
-                scope.Complete();
-
-                return novo.CodigoGenero;
-            }                   
+            return novo.CodigoGenero;            
         }        
 
         public void Editar(EditarGeneroDTO dto)
@@ -49,18 +43,13 @@ namespace Aplication.Generos
             
             if (genero == null)
                 throw new ArgumentNullException(string.Format("Gênero de código {0} não foi localizado!", dto.CodigoGenero));
-            
-            using(var scope = new TransactionScope())
-            {
-                genero.Nome = dto.Nome;
-                genero.Ativo = dto.Ativo;
+                        
+            genero.Nome = dto.Nome;
+            genero.Ativo = dto.Ativo;
 
-                Validar(genero);    
+            Validar(genero);    
 
-                _unitOfWork.Commit(); 
-
-                scope.Complete();       
-            }
+            _unitOfWork.Commit();                         
         }
 
         private void Validar(Genero dto)
@@ -95,14 +84,9 @@ namespace Aplication.Generos
         }
 
         public void RemoverGeneros(List<int> IdsGeneros)
-        {
-            using(var scope = new TransactionScope())
-            {
-                _repGenero.Remover(IdsGeneros);
-                _unitOfWork.Commit();
-
-                scope.Complete();
-            }            
+        {            
+            _repGenero.Remover(IdsGeneros);
+            _unitOfWork.Commit();                                        
         }
     }
 }

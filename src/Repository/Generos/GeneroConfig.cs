@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Repository.Generos
 {
-    public class GeneroConfig
+    public class GeneroConfig : IEntityTypeConfiguration<Genero>
     {
         public void Configure(EntityTypeBuilder<Genero> builder)
         {
