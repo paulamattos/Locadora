@@ -1,11 +1,18 @@
 version: '3'
 services: 
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server
-    container_name: sqlserver
-    environment: 
-      ACCEPT_EULA: 'Y'
-      SA_PASSWORD: 'DesafioTecnico@17032021!!!'
-      MSSQL_PID: 'Express'
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: '123456'
+  webapi:
+    build: .
+    image: alexborgescorrea/locadora
+    container_name: locadora
     ports: 
-      - 1433:1433
+      - 8080:80
+    environment: 
+      db: 'Host=postgres;Port=5432;Pooling=true;Database=Locadora;User Id=postgres;Password=123456;'            
+    depends_on: 
+      - postgres
