@@ -4,7 +4,7 @@
 
 ## Estrutura do projeto
 * Solução C# .NET 5
-* Banco de dados SQL Server
+* Banco de dados PostgreSQL
 * Endpoints disponibilizados via swagger
 
 
@@ -24,7 +24,7 @@ Utilizar método Listar para listar todos os filmes
 #### Remover
 Utilizar o método Remover passando como parâmetro o código de um filme para removê-lo
 
-Utilizar o método RemoverFilmes passando como parâmetro uma lista de código de filmes para serem removidos
+Utilizar o método Remover passando como parâmetro uma lista de código de filmes para serem removidos
 
 ## Gêneros
 #### Inserir   
@@ -39,7 +39,7 @@ Utilizar método Listar para listar todos os gêneros
 #### Remover
 Utilizar o método Remover passando como parâmetro o código de um gênero para removê-lo
 
-Utilizar o método RemoverGeneros passando como parâmetro uma lista de código de gêneros para serem removidos
+Utilizar o método Remover passando como parâmetro uma lista de código de gêneros para serem removidos
 
 ## Locação
 #### Inserir
