@@ -30,7 +30,11 @@ namespace Repository.Filmes
                     
             builder.Property(p => p.CodigoGenero)
                     .HasColumnName("IDGENERO")
-                    .IsRequired();
+                    .IsRequired(); 
+
+           builder.HasOne(p => p.Genero)                
+                   .WithMany()
+                   .HasForeignKey(p => p.CodigoGenero);                                                   
         }
     }
 }

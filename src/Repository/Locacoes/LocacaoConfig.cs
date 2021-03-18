@@ -15,14 +15,18 @@ namespace Repository.Locacoes
                    .IsRequired()
                    .ValueGeneratedOnAdd(); 
 
-                builder.Property(p => p.CPF)
-                    .HasColumnName("CPF")
-                    .HasMaxLength(14)
-                    .IsRequired();                   
+            builder.Property(p => p.CPF)
+                .HasColumnName("CPF")
+                .HasMaxLength(14)
+                .IsRequired();                   
 
-                builder.Property(p => p.DataLocacao)
-                    .HasColumnName("DATALOCACAO")
-                    .IsRequired();
+            builder.Property(p => p.DataLocacao)
+                .HasColumnName("DATALOCACAO")
+                .IsRequired();
+
+            builder.HasMany(p => p.Filmes)                
+                   .WithOne()
+                   .HasForeignKey(p => p.CodigoLocacao);
         }
     }
 }

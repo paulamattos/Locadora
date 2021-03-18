@@ -26,7 +26,7 @@ namespace Repository.Generos
                     
             builder.Property(p => p.Ativo)
                     .HasColumnName("ATIVO")
-                    .IsRequired();                   
+                    .IsRequired();                                                  
         }
     }
 }

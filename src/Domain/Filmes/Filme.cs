@@ -1,4 +1,5 @@
 using System;
+using Domain.Generos;
 
 namespace Domain.Filmes
 {
@@ -9,5 +10,7 @@ namespace Domain.Filmes
         public DateTime DataCriacao { get; set; }
         public bool Ativo { get; set; }
         public int CodigoGenero { get; set; }
+
+        public virtual Genero Genero { get; set; }
     }
 }
