@@ -23,7 +23,7 @@ namespace Aplication.Filmes
         {                        
             var novo = new Filme();
             novo.Nome = dto.Nome;
-            novo.DataCriacao = DateTime.Today; //a data de criação 
+            novo.DataCriacao = DateTime.Today; //a data de criação não precisa vir do front, pego a data atual e ela não é alterada
             novo.Ativo = dto.Ativo;
             novo.CodigoGenero = dto.CodigoGenero;
             
@@ -33,7 +33,7 @@ namespace Aplication.Filmes
 
             _unitOfWork.Commit();
 
-            return novo.CodigoFilme;
+            return novo.CodigoFilme;  //retorno o ID do novo registro para controle do front
         }        
 
         public void Editar(EditarFilmeDTO dto)
@@ -55,7 +55,7 @@ namespace Aplication.Filmes
         private void Validar(Filme dto)
         {
             if(String.IsNullOrEmpty(dto.Nome))
-                throw new ArgumentException("Nome não foi informado.");
+                throw new  ArgumentException("Nome não foi informado.");
             
             if(dto.CodigoGenero == 0)
                 throw new ArgumentException("Gênero não foi informado.");
@@ -64,7 +64,7 @@ namespace Aplication.Filmes
         public List<FilmeView> Listar()
         {
             var query = _repFilme.Listar();
-            var filmes = query.Select(p => new FilmeView()
+            var filmes = query.Select(p => new FilmeView()  
             {
                 CodigoFilme = p.CodigoFilme,
                 Nome = p.Nome,

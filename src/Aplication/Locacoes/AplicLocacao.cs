@@ -25,10 +25,10 @@ namespace Aplication.Locacoes
         {
             var novo = new Locacao();
             
-            using(var scope = new TransactionScope())
+            using(var scope = new TransactionScope()) //aqui é feita mais de uma transação e caso ocorra algum erro vai executar rollback 
             {                
                 novo.CPF = dto.CPF;
-                novo.DataLocacao = DateTime.Now;            
+                novo.DataLocacao = DateTime.Today; //a data de locação não precisa vir do front, pego a data atual e ela não é alterada           
 
                 Validar(novo);
 
@@ -40,12 +40,12 @@ namespace Aplication.Locacoes
                 scope.Complete();
             }
             
-            return novo.CodigoLocacao;
+            return novo.CodigoLocacao; //retorno o ID do novo registro para controle do front          
         }
         
         public void Editar(EditarLocacaoDTO dto)
         {
-            using(var scope = new TransactionScope())
+            using(var scope = new TransactionScope()) //aqui é feita mais de uma transação e caso ocorra algum erro vai executar rollback 
             {  
                 var locacao = _repLocacao.RecuperarPorId(dto.CodigoLocacao);
 

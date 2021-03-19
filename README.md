@@ -1,54 +1,85 @@
-# Locadora
-## *Nesse projeto é possível cadastrar filmes e locações*
+# Projeto de Locadora
 
+Esse projeto contém uma API simples de demonstração para gestão de locadoras.<br/>
+Foi disponibilizado no Azure cloud container no link http://locadoraapi.brazilsouth.azurecontainer.io/swagger/index.html
 
 ## Estrutura do projeto
-* Solução C# .NET 5
+
+O projeto é dividido em quatro camadas lógicas.
+* **WebApi** responsável por disponibilizar os endpoints da aplicação e realizar a configuração e injeção dos serviços.
+* **Aplication** responsável por coordenar e transacionar os casos de uso.
+* **Domain** responsável pelas entidades e regras de negócio do domínio.
+* **Repository** responsável pela abstração do acesso ao dados da aplicação.
+
+##  Tecnologias utilizadas
+
+* C# .NET 5
 * Banco de dados PostgreSQL
+* ORM Entity Framework
+* Api RESTful
 * Endpoints disponibilizados via swagger
+* Docker 
+* Azure cloud
 
+## Instalação
 
+### Instalação manual
 
-## Exemplo de uso
+* Tenha o [.NET 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0) instalado.
+* Tenha o [PostgreSQL](https://www.postgresql.org/) instalado.
+* Clone o repositório em sua máquina usando o comando git clone https://github.com/paulamattos/Locadora.git
+* Configure a string de conexão do PostgreSQL editando a variável de ambiente **db** no arquivo **"\src\WebApi\appsettings.json"**.
+* Abra o console na pasta do projeto e execute o comando **dotnet restore**.
+* E por fim execute o comando **dotnet run** na raiz do projeto para subir a aplicação.
+* Acesse o link **https://localhost:5001/swagger/index.html**
 
-## Filmes
+### Instalação via docker-compose
+
+* Tenha o [Docker](https://www.docker.com/) instalado.
+* Abra o console na pasta do projeto e execute o comando **docker-compose up -d**. Esse comando vai utilizar o arquivo **docker-compose.yml** para montar o container do PostgreSQL e outro da aplicação.
+* Espere até que os containers estejam prontos.
+* Acesse o link **https://localhost:5001/swagger/index.html**.
+
+## API contém os seguintes endpoints
+
+## Filme
 #### Inserir   
-Utilizar método Inserir que recebe os dados do filme através de um DTO e retorna o ID do novo filme cadastrado
+Utilize o método POST que recebe os dados do filme através de um JSON e retorna o ID do novo filme cadastrado
 
 #### Editar
-Utilizar método Editar que recebe os dados do filme através de um DTO
+Utilize o método PUT que recebe os dados do filme através de um JSON
 
 #### Listar
-Utilizar método Listar para listar todos os filmes
+Utilize o método GET para listar todos os filmes
 
 #### Remover
-Utilizar o método Remover passando como parâmetro o código de um filme para removê-lo
+Utilize o método DELETE passando como parâmetro o código de um filme para removê-lo
 
-Utilizar o método Remover passando como parâmetro uma lista de código de filmes para serem removidos
+Utilize o método DELETE passando como parâmetro uma lista de código de filmes para serem removidos
 
-## Gêneros
+## Gênero
 #### Inserir   
-Utilizar método Inserir que recebe os dados do gênero através de um DTO e retorna o ID do novo gênero cadastrado
+Utilize o método POST que recebe os dados do gênero através de um JSON e retorna o ID do novo gênero cadastrado
 
 #### Editar
-Utilizar método Editar que recebe os dados do gênero através de um DTO
+Utilize o método PUT que recebe os dados do gênero através de um JSON
 
 #### Listar
-Utilizar método Listar para listar todos os gêneros
+Utilize o método GET para listar todos os gêneros
 
 #### Remover
-Utilizar o método Remover passando como parâmetro o código de um gênero para removê-lo
+Utilize o método DELETE passando como parâmetro o código de um gênero para removê-lo
 
-Utilizar o método Remover passando como parâmetro uma lista de código de gêneros para serem removidos
+Utilize o método DELETE passando como parâmetro uma lista de código de gêneros para serem removidos
 
 ## Locação
 #### Inserir
-Utilizar o método Inserir que recebe os dados da locação através de um DTO e retorna o código da nova locação
+Utilize o método POST que recebe os dados da locação através de um JSON e retorna o código da nova locação
 
 #### Editar
-Utilizar o método Editar que recebe os dados da locação através de um DTO
+Utilize o método PUT que recebe os dados da locação através de um JSON
 
 #### Listar
-Utilizar o método listar para listar todas as locação
+Utilize o método GET para listar todas as locações
 
 ###### *Métodos de remoção não foram implementados em locação porque uma locação não deve ser removida, somente alterada*

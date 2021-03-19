@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Aplication.Locacoes;
 using Aplication.Locacoes.DTOs;
@@ -7,26 +8,41 @@ namespace WebApi.Controllers
 {
      [ApiController]
      [Route("[controller]")]
-     public class LocadoraController : ControllerBase
+     public class LocacaoController : ControllerBase
      {
 
          private readonly IAplicLocacao _aplicLocacao;
          
-         public LocadoraController(IAplicLocacao aplicLocacao)
+         public LocacaoController(IAplicLocacao aplicLocacao)
          {
              _aplicLocacao = aplicLocacao;
          }
 
         [HttpPost]
-        public int Inserir(InserirLocacaoDTO dto)
+        public IActionResult Inserir(InserirLocacaoDTO dto)
         {
-            return _aplicLocacao.Inserir(dto);
+            try
+            {
+                return Ok(_aplicLocacao.Inserir(dto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPut]
-        public void Editar(EditarLocacaoDTO dto)
+        public IActionResult Editar(EditarLocacaoDTO dto)
         {
-            _aplicLocacao.Editar(dto);
+            try
+            {
+                _aplicLocacao.Editar(dto);
+                return Ok();
+            }            
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet]

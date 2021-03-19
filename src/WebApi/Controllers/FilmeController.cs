@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Aplication.Filmes;
 using Aplication.Filmes.DTOs;
@@ -17,16 +18,31 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public int Inserir(InserirFilmeDTO dto)
+        public IActionResult Inserir(InserirFilmeDTO dto)
         {
-            return _aplicFilme.Inserir(dto);
+            try
+            {
+                return Ok(_aplicFilme.Inserir(dto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
 
         [HttpPut]
-        public void Editar(EditarFilmeDTO dto)
+        public IActionResult Editar(EditarFilmeDTO dto)
         {
-            _aplicFilme.Editar(dto);
+            try 
+            {
+                _aplicFilme.Editar(dto);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }            
         }
 
         [HttpGet]
@@ -35,13 +51,13 @@ namespace WebApi.Controllers
             return _aplicFilme.Listar();
         }
 
-        [HttpDelete("Remover/{id}")]        
+        [HttpDelete("Remover/{id}")] //remove um filme por vez        
         public void Remover([FromRoute] int id)
         {
             _aplicFilme.Remover(id);
         } 
 
-        [HttpDelete]
+        [HttpDelete] //remove uma lista de filmes
         public void RemoverFilmes([FromQuery] List<int> ids)
         {
             _aplicFilme.RemoverFilmes(ids);

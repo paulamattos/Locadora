@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Aplication.Generos;
 using Aplication.Generos.DTOs;
@@ -17,24 +18,39 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public int Inserir(InserirGeneroDTO dto)
+        public IActionResult Inserir(InserirGeneroDTO dto)
         {
-            return _aplicGenero.Inserir(dto);
+            try
+            {
+                return Ok(_aplicGenero.Inserir(dto));
+            }            
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPut]
-        public void Editar(EditarGeneroDTO dto)
+        public IActionResult Editar(EditarGeneroDTO dto)
         {
-            _aplicGenero.Editar(dto);
+            try
+            {             
+                _aplicGenero.Editar(dto);   
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        [HttpDelete("Remover/{id}")]        
+        [HttpDelete("Remover/{id}")] //remove um gênero por vez
         public void Remover([FromRoute] int id)
         {
             _aplicGenero.Remover(id);
         }
 
-        [HttpDelete]
+        [HttpDelete] //remove uma lista de gêneros
         public void RemoverGeneros([FromQuery] List<int> ids)
         {
             _aplicGenero.RemoverGeneros(ids);

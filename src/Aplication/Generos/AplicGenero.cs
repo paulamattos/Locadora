@@ -25,7 +25,7 @@ namespace Aplication.Generos
             var novo = new Genero()
             {
                 Nome = dto.Nome,
-                DataCriacao = DateTime.Now,
+                DataCriacao = DateTime.Today, //a data de criação não precisa vir do front, pego a data atual e ela não é alterada
                 Ativo = dto.Ativo
             };
 
@@ -34,7 +34,7 @@ namespace Aplication.Generos
             _repGenero.Inserir(novo);
             _unitOfWork.Commit();                
 
-            return novo.CodigoGenero;            
+            return novo.CodigoGenero;  //retorno o ID do novo registro para controle do front          
         }        
 
         public void Editar(EditarGeneroDTO dto)
@@ -67,7 +67,7 @@ namespace Aplication.Generos
                 Nome = p.Nome,                
                 Ativo = p.Ativo,
                 DataCriacao = p.DataCriacao
-            }).ToList();;
+            }).ToList();
 
             return generos;
         }
